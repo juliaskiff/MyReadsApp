@@ -2,7 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import * as BooksAPI from './BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
 
 import ListBooks from './ListBooks';
 import SearchBooks from './SearchBooks';
@@ -66,14 +65,30 @@ class App extends React.Component {
           if(!queryValid) {
               console.log("Invalid Search Paramters")
           }
+
           if(queryValid) {
-            const match = new RegExp(escapeRegExp(searchQuery), 'i')
-            return searchResults.filter((book) => match.test(book.title) || match.test(book.author) || match.test(book.category))
+
+            //Match search results with books on home page
+            let queryResults = searchResults.map(book => book.id)
+            let bookRequests = []
+
+            queryResults.forEach(function (book) {
+              bookRequests.push(BooksAPI.get(book))
+            })
+
+            return Promise.all(bookRequests)
+              .then(newQueryResults => {
+                ///Return the new ResultSet Object
+                return newQueryResults
+              })
           }
+
           else {
             return searchResults = []
           }
+
       })
+
         // Set the state to see updates
         .then(searchResults => {
           this.setState(state => ({
