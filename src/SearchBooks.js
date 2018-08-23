@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import Book from './Book'
 
 class SearchBooks extends React.Component {
@@ -21,7 +20,7 @@ class SearchBooks extends React.Component {
   	}
 
   	render () {
-      const { query } = this.state;
+      const { query } = this.state.query;
   		const { searchResults } = this.props;
 
   		return(

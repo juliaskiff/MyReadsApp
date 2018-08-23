@@ -22,7 +22,7 @@ class App extends React.Component {
   }
 
   //Change the bookshelf
-  changeBookShelf = (book, newShelf) => {
+ changeBookShelf = (book, newShelf) => {
     // Update the database     
     BooksAPI.update(book, newShelf)
 
@@ -35,7 +35,6 @@ class App extends React.Component {
         })
       }) 
   }
-
 
   // Get search results via API
   search = (searchQuery) => {
